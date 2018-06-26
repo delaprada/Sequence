@@ -11,8 +11,7 @@ public:
  string longestConsecutive();
  string longestRepeated();
 private:
- int length;
- char array[100][100];
+ string array;
  int sumA;
  int sumT;
  int sumC;

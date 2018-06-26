@@ -8,29 +8,21 @@ using namespace std;
 Sequence::Sequence(string filename)
 {
  ifstream infile;
- infile.open("dna.txt");
- char *ptr=&array[0][0];
+ infile.open(filename);
+ assert(infile.is_open());
+ string h;
+ getline(infile,array);
  while(!infile.eof())
 {
- infile>>*ptr;
- ptr++;
+ getline(infile,h);
+ array+=h;
 }
  infile.close();
 }
 
 int Sequence::length()
 {
- length=0;
- for(int i=0;i<100;++i)
- {
-   for(int j=0;j<100;++j)
-   {
-     if(array[i][j]=='A'||array[i][j]=='T'||array[i][j]=='C'||array[i][j]=='G')
-      {
-        length++;
-      }
-   }
- }
+ return array.length();
 }
 
 int Sequence::numberOf(char base)
@@ -43,13 +35,10 @@ int Sequence::numberOf(char base)
   {
     for(int i=0;i<100;++i)
     {
-       for(int j=0;j<100;++j)
-       {
-         if(array[i][j]=='A')
+         if(array[i]=='A')
          {
             sumA++;
          }
-       }
     }
     return sumA;
 }
@@ -58,13 +47,10 @@ int Sequence::numberOf(char base)
   {
     for(int i=0;i<100;++i)
     {
-       for(int j=0;j<100;++j)
-       {
-         if(array[i][j]=='T')
+         if(array[i]=='T')
          {
             sumT++;
          } 
-       }
     }
     return sumT;
 }
@@ -73,27 +59,22 @@ int Sequence::numberOf(char base)
   { 
     for(int i=0;i<100;++i)
     {
-      for(int j=0;j<100;++j)
-      {
-        if(array[i][j]=='C')
+        if(array[i]=='C')
         {
            sumC++;
         }
-      } 
     }
     return sumC;
   }
+
   else if(base=='G')
   {
     for(int i=0;i<100;++i)
     {
-      for(int j=0;j<100;++j)
-      {
-        if(array[i][j]=='G')
+        if(array[i]=='G')
         {
           sumG++;
         }
-      }
     }
    return sumG;
   }
@@ -102,32 +83,68 @@ string Sequence::longestConsecutive()
 {
    int max=0;
    int flag1;
-   int flag2;
    int constring=0;
-   for(int i=0;i<100;++i)
+   for(int i=0;i<array.length();++i)
    {
-       for(int j=0;j<100;++j)
+        while(array[i][j]==array[i][j+1])
        {
-          while(array[i][j]==array[i][j+1])
-          {
-             constring++;
-             j++;
-          }
-          if(constring>max)
-          {
-             max=constring;
-             flag1=i;
-             flag2=j;
-          }
+           constring++;
+           i++;
        }
+        if(constring>max)
+       {
+           max=constring;
+           flag1=i;
+       }
+       constring=0;
    }
-   for(int k=0;k<constring;++k)
-   {
-       cout<<array[flag1][flag2];
-   }
+   return array.substr((flag1-max+1),max);
 }
 
-  
+string Sequence::longestRepeated()
+{
+   int length=array.length();
+   int longest=length-1;
+   for(longest;longest>0;--longest)
+   {
+      string *sub;
+      sub=new string[length-longest+1];
+      for(int i=0;i<length-longest+1;++i)
+      {
+         sub[i]=array.substr(i,longest);
+      }
+      for(int i=0;i<length-longest+1;++i)
+      {
+         for(int j=i+1;j<length-longest+1;++j)
+         {
+            if(sub[i]=sub[j])
+            {
+               return sub[i];
+            }
+         }
+      }
+      delete [] sub;
+   }
+   return NULL;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
