@@ -10,10 +10,10 @@ public:
  int numberOf(char base);
  string longestConsecutive();
  string longestRepeated();
-private:
  string array;
+private:
  int sumA;
  int sumT;
  int sumC;
  int sumG;
-}
+};

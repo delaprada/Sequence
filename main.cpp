@@ -5,8 +5,7 @@ using namespace std;
 int main()
 {
   Sequence a("dna.txt");
-  cout<<a.array<<endl;
-  cout<<"序列的长度为："<<a.length<<endl;
+  cout<<"序列的长度为："<<a.length()<<endl;
   cout<<"A碱基的数目为："<<a.numberOf('A')<<endl;
   cout<<"T碱基的数目为："<<a.numberOf('T')<<endl;
   cout<<"C碱基的数目为："<<a.numberOf('C')<<endl;

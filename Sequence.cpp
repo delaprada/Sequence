@@ -32,8 +32,8 @@ int Sequence::numberOf(char base)
   sumC=0;
   sumG=0;
   if(base=='A')
-  {
-    for(int i=0;i<100;++i)
+ {
+    for(int i=0;i<array.length();++i)
     {
          if(array[i]=='A')
          {
@@ -43,9 +43,9 @@ int Sequence::numberOf(char base)
     return sumA;
 }
 
-  else if(base='T')
+  else if(base=='T')
   {
-    for(int i=0;i<100;++i)
+    for(int i=0;i<array.length();++i)
     {
          if(array[i]=='T')
          {
@@ -57,7 +57,7 @@ int Sequence::numberOf(char base)
 
   else if(base=='C')
   { 
-    for(int i=0;i<100;++i)
+    for(int i=0;i<array.length();++i)
     {
         if(array[i]=='C')
         {
@@ -69,7 +69,7 @@ int Sequence::numberOf(char base)
 
   else if(base=='G')
   {
-    for(int i=0;i<100;++i)
+    for(int i=0;i<array.length();++i)
     {
         if(array[i]=='G')
         {
@@ -78,7 +78,7 @@ int Sequence::numberOf(char base)
     }
    return sumG;
   }
-
+}
 string Sequence::longestConsecutive()
 {
    int max=0;
@@ -86,7 +86,7 @@ string Sequence::longestConsecutive()
    int constring=0;
    for(int i=0;i<array.length();++i)
    {
-        while(array[i][j]==array[i][j+1])
+        while(array[i]==array[i+1])
        {
            constring++;
            i++;
@@ -98,7 +98,7 @@ string Sequence::longestConsecutive()
        }
        constring=0;
    }
-   return array.substr((flag1-max+1),max);
+   return array.substr((flag1-max),(max+1));
 }
 
 string Sequence::longestRepeated()
@@ -117,7 +117,7 @@ string Sequence::longestRepeated()
       {
          for(int j=i+1;j<length-longest+1;++j)
          {
-            if(sub[i]=sub[j])
+            if(sub[i]==sub[j])
             {
                return sub[i];
             }
