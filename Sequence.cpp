@@ -2,8 +2,15 @@
 #include<fstream>
 #include<string>
 #include<cassert>
+#include<string.h>
+#include<stdio.h>
+#include<stdlib.h>
 #include"Sequence.h"
 using namespace std;
+
+#define MAXCHAR 2000000
+char c[MAXCHAR], *a[MAXCHAR];
+
 
 Sequence::Sequence(string filename)
 {
@@ -101,31 +108,55 @@ string Sequence::longestConsecutive()
    return array.substr((flag1-max),(max+1));
 }
 
+void Sequence::readTxt(string filename)
+{
+  int n=0;
+  ifstream infile;
+  infile.open(filename.data());
+  assert(infile.is_open());
+  while(!infile.eof())
+ {
+   infile>>c[n];
+   a[n]=&c[n];
+   n++;
+ }
+}
+
+int Sequence::comlen(char *p,char *q)
+{
+  int i=0;
+  while(*p &&(*p++==*q++))
+  {
+    ++i;
+  }
+  return i;
+}
+
+int pstrcmp(const void *p1,const void *p2)
+{
+  return strcmp(*(char* const*)p1,*(char* const*)p2);
+}
+
+
 string Sequence::longestRepeated()
 {
-   int length=array.length();
-   int longest=length-1;
-   for(longest;longest>0;--longest)
-   {
-      string *sub;
-      sub=new string[length-longest+1];
-      for(int i=0;i<length-longest+1;++i)
-      {
-         sub[i]=array.substr(i,longest);
-      }
-      for(int i=0;i<length-longest+1;++i)
-      {
-         for(int j=i+1;j<length-longest+1;++j)
-         {
-            if(sub[i]==sub[j])
-            {
-               return sub[i];
-            }
-         }
-      }
-      delete [] sub;
-   }
-   return NULL;
+   readTxt("dna.txt");
+   int i,temp;
+   int maxlen=0,maxi=0;
+   qsort(a,array.length(),sizeof(char*),pstrcmp);
+   for(i=0;i<array.length()-1;++i)
+  {
+    temp=comlen(a[i],a[i+1]);
+    if(temp>maxlen)
+    {
+      maxlen=temp;
+      maxi=i;
+    }
+  }
+   string c;
+   c.assign(a[maxi],maxlen);
+   return c;
+  
 }
 
 

@@ -12,6 +12,5 @@ int main()
   cout<<"G碱基的数目为："<<a.numberOf('G')<<endl;
   cout<<"最长连续的碱基序列为："<<a.longestConsecutive()<<endl;
   cout<<a.longestRepeated();
-  system("pause");
   return 0;
 }
